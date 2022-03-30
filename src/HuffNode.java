@@ -9,7 +9,15 @@ public class HuffNode {
     private boolean hasOne;
     private boolean hasSymbol;
 
-    private HuffNode(int id, float val){
+
+    public HuffNode(float val) {
+        this.value = val;
+        this.hasZero = false;
+        this.hasOne = false;
+        this.hasSymbol = false;
+
+    }
+    public HuffNode(int id, float val){
         this.nodeId = id;
         this.value = val;
         this.hasZero = false;
@@ -17,43 +25,49 @@ public class HuffNode {
         this.hasSymbol = false;
     }
 
-    private HuffNode(int id, int val, String sy) {
+
+    public HuffNode(int id, float val, String sy) {
         this.nodeId = id;
         this.value = val;
         this.symbol = sy;
         this.hasSymbol = true;
     }
 
-    private void setZeroNode(int id){
+    public void setId(int id){
+        this.nodeId = id;
+    }
+
+
+    public void setZeroNode(int id){
         this.nextZero = id;
         this.hasZero = true;
     }
-    private void setOneNode(int id){
+    public void setOneNode(int id){
         this.nextOne = id;
         this.hasOne = true;
     }
 
-    private boolean isHasSymbol(){
+    public boolean isHasSymbol(){
         return hasSymbol;
     }
 
-    private boolean isHasZero(){
+    public boolean isHasZero(){
         return hasZero;
     }
 
-    private boolean isHasOne(){
+    public boolean isHasOne(){
         return hasOne;
     }
 
-    private int getNextZero(){
+    public int getNextZero(){
         return this.nextZero;
     }
 
-    private int getNextOne(){
+    public int getNextOne(){
         return this.nextOne;
     }
 
-    private float getValue(){
+    public float getValue(){
         return this.value;
     }
 
