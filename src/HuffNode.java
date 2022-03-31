@@ -1,7 +1,7 @@
-public class HuffNode {
-    private String symbol;
+public class HuffNode implements Comparable<HuffNode>{
+    private char symbol;
     private int nodeId;
-    private float value;
+    private float frequency;
 
     private int nextZero;
     private int nextOne;
@@ -19,16 +19,17 @@ public class HuffNode {
     }
     public HuffNode(int id, float val){
         this.nodeId = id;
-        this.value = val;
+        this.frequency = val;
         this.hasZero = false;
         this.hasOne = false;
         this.hasSymbol = false;
     }
 
 
+
     public HuffNode(int id, float val, String sy) {
         this.nodeId = id;
-        this.value = val;
+        this.frequency = val;
         this.symbol = sy;
         this.hasSymbol = true;
     }
@@ -67,9 +68,13 @@ public class HuffNode {
         return this.nextOne;
     }
 
-    public float getValue(){
-        return this.value;
+    private float getFrequency(){
+        return this.frequency;
+
+
+
+    @Override
+    public int compareTo(HuffNode otherNode) {
+        return (int) (this.frequency - otherNode.frequency);
     }
-
-
 }

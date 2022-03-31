@@ -16,5 +16,4 @@ public class HuffTables {
         symbolFreqTable.put("9", (float) 0.05);
         System.out.print(symbolFreqTable.toString());
     }
-
 }
