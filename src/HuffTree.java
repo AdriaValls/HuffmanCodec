@@ -2,8 +2,8 @@ import java.util.*;
 
 public class HuffTree {
     private HuffNode initialNode;
-    //private Queue<HuffNode> huffmanTree = new PriorityQueue<HuffNode>(new nodeComparator());
     private List<HuffNode> huffmanTree;
+
     private HashMap<String,Float> freqTable;
 
     public HuffTree(HashMap<String,Float> freqTable){
@@ -14,7 +14,7 @@ public class HuffTree {
     public void treeFromTable(HashMap<String,Float> freqTable){
         Queue<HuffNode> nodesQ = nodeListFromTable(freqTable);
         List<HuffNode> tree = new ArrayList<HuffNode>();
-        float maxFreq = frequencySumFromTable(freqTable);
+
         HuffNode x = nodesQ.poll();
         HuffNode y = nodesQ.poll();
         float currentFreq = x.getFrequency() + y.getFrequency();
@@ -43,18 +43,16 @@ public class HuffTree {
         newNode.setZeroNode(y.getId());
         newNode.setId(tree.size());
         tree.add(newNode);
-
         this.initialNode = newNode;
         this.huffmanTree = tree;
     }
 
-    public void printNodes(){
-        for(int i = 0; i < huffmanTree.size(); i++){
-            String nodes = huffmanTree.get(i).nodeToString();
-            System.out.print(nodes + "\n");
-        }
-    }
 
+
+    /**
+     * Creates nodes and adds them to a priority queue ordered by frequencies.
+     * @Queue<HuffNode>
+     */
     public Queue<HuffNode> nodeListFromTable(HashMap<String,Float> freqTable){
         Queue<HuffNode> nodes = new PriorityQueue<HuffNode>(new nodeComparator());
         for(String key : freqTable.keySet()){
@@ -64,6 +62,10 @@ public class HuffTree {
         return nodes;
     }
 
+    /**
+     * It calculates the total sum of the frequencies (It should be 1 always).
+     * @return Float
+     */
     public float frequencySumFromTable(HashMap<String,Float> freqTable){
         float freqSum = 0;
         for(String key : freqTable.keySet()){
@@ -72,13 +74,15 @@ public class HuffTree {
         return freqSum;
     }
 
-
+    /**
+     * It creates a table with Symbols and it's respective nodes from the tree.
+     * @return HashMap<String,String>
+     */
     public HashMap<String,String> codeTableFromTree(){
         HashMap<String,String> symbolCodeTable = new HashMap<String,String>();
         HashMap<String,String>  codeTable = generateTable(symbolCodeTable, initialNode.getId(),"");
         return codeTable;
     }
-
     public HashMap<String,String> generateTable(HashMap<String,String> table, int nodeId, String code) {
         HuffNode nextNode = huffmanTree.get(nodeId);
         if (nextNode.isHasSymbol()) {
@@ -94,6 +98,16 @@ public class HuffTree {
             table = generateTable(table, nextNode.getNextZero(), newCode);
         }
         return table;
+    }
+
+    /**
+     * Prints all the nodes and their values of the tree,
+     */
+    public void printNodes(){
+        for(int i = 0; i < huffmanTree.size(); i++){
+            String nodes = huffmanTree.get(i).nodeToString();
+            System.out.print(nodes + "\n");
+        }
     }
 
 }

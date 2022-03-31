@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class HuffTables {
     private HashMap<String,Integer> originalCountTable;
     private HashMap<String,Float> symbolFreqTable;
+    private HashMap<String,String> codeTable;
 
 
     public HuffTables(){
@@ -15,9 +16,23 @@ public class HuffTables {
         symbolFreqTable.put("T", (float) 0.1);
         symbolFreqTable.put("9", (float) 0.05);
         HuffTree hTree = new HuffTree(symbolFreqTable);
-        hTree.printNodes();
+        //hTree.printNodes();
 
-        HashMap<String,String> codeTable =hTree.codeTableFromTree();
-        System.out.print(codeTable);
+        codeTable = hTree.codeTableFromTree();
+
+        System.out.print(codeTable +"\n");
+
+    }
+
+    public String symbolsToBits(String squence){
+        String bits = "";
+
+        for(int i = 0; i<squence.length(); i++) {
+            // access each character
+            char a = squence.charAt(i);
+            String symbol = "" + a;
+            bits = bits+codeTable.get(symbol);
+        }
+        return bits;
     }
 }
