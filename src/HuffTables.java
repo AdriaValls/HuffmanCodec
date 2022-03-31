@@ -15,6 +15,22 @@ public class HuffTables {
         this.symbolFreqTable = symbolFreqTable;
     }
 
+    public String generateRandomSymbols(int numSymbols){
+        String sequencia = "";
+        for(int i=0; i<numSymbols;i++){
+            double random = Math.random(); //0-1
+            float sumFreq = 0;
+            for(String key : symbolFreqTable.keySet()){
+                sumFreq += symbolFreqTable.get(key);
+                if(sumFreq>random){
+                    sequencia = sequencia+key;
+                    break;
+                }
+            }
+        }
+        return sequencia;
+    }
+
     public HashMap<String,Float> getFreqTable(){
         return symbolFreqTable;
     }

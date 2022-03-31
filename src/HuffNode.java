@@ -71,9 +71,9 @@ public class HuffNode{
 
 
     public String nodeToString(){
-        String toS = "Node "+nodeId+ ", amb frequencia: "+frequency;
+        String toS = "Node "+nodeId+ ", with frequency: "+frequency;
         if(isHasSymbol()){
-            toS = toS +", i Simbol "+symbol;
+            toS = toS +", and Symbol: "+symbol;
         }
         return toS;
     }
