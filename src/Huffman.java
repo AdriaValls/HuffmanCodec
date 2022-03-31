@@ -29,8 +29,8 @@ public class Huffman {
         float bitsNeed = bitsFromCodeTable(codeTable,symbolFreqTable);
         System.out.print("\n"+"Bits needed after compression: "+bitsNeed+"\n"+"\n"+"\n");
 
-
-        for(int i=0; i<6; i++){
+        int numSequences = 6;
+        for(int i=0; i<numSequences; i++){
             String sequence = tables.generateRandomSymbols(1200);
             System.out.print("Sequence number "+i+": "+sequence+"\n");
             float bitsNoComp = sequence.length() * bitsBfCompression ;
