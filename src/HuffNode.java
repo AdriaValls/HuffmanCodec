@@ -25,13 +25,6 @@ public class HuffNode{
         this.hasSymbol = true;
     }
 
-    public HuffNode(int id, float frequency, String sy) {
-        this.nodeId = id;
-        this.frequency = frequency;
-        this.symbol = sy;
-        this.hasSymbol = true;
-    }
-
     public void setId(int id){
         this.nodeId = id;
     }

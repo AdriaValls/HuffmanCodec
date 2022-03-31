@@ -49,6 +49,9 @@ public class HuffTree {
         this.initialNode = newNode;
         this.huffmanTree = tree;
     }
+
+
+
     public void invertCodeTable(){
         HashMap<String,String> newCodeT = new HashMap<String,String>();
 
@@ -62,60 +65,9 @@ public class HuffTree {
         return this.inverseCodeTable;
     }
 
-    public String symbolsFromBits(String bits){
-
-        Queue<String> bitList = new LinkedList<>();
-        for(int i = 0; i<bits.length(); i++) {
-            char b = bits.charAt(i);
-            String nextBit = "" + b;
-            bitList.add(nextBit);
-        }
-        String sequence = "";
-        String nextBit = "";
-        String nextSeq = "";
-        while (!bitList.isEmpty()){
-            nextBit = bitList.poll();
-            nextSeq = nextSeq+nextBit;
-            if(inverseCodeTable.containsKey(nextSeq)){
-                sequence = sequence + inverseCodeTable.get(nextSeq);
-                nextSeq = "";
-            }
-        }
-
-        return sequence;
-    }
-
-/*
-    boolean gotSymbol;
-        while (!bitList.isEmpty()){
-        gotSymbol = false;
-        String nextSymbol = "";
-        HuffNode nextNode = initialNode;
-        String nextBit = bitList.poll();
-
-        while(!gotSymbol){
-
-            if(nextNode.isHasSymbol()){
-                nextSymbol = nextNode.getSymbol();
-                sequence = sequence+nextSymbol;
-                gotSymbol = true;
-            }else{
-                if (nextBit.equals("0")){
-                    nextNode = huffmanTree.get(nextNode.getNextZero());
-                    nextBit = bitList.poll();
-                }else{
-                    nextNode = huffmanTree.get(nextNode.getNextOne());
-                    nextBit = bitList.poll();
-                }
-            }
-        }
-    }
-*/
-
-
     /**
      * Creates nodes and adds them to a priority queue ordered by frequencies.
-     * @Queue<HuffNode>
+     *  @return Queue<HuffNode>
      */
     public Queue<HuffNode> nodeListFromTable(HashMap<String,Float> freqTable){
         Queue<HuffNode> nodes = new PriorityQueue<HuffNode>(new nodeComparator());
@@ -125,6 +77,36 @@ public class HuffTree {
         }
         return nodes;
     }
+
+    /**
+     * Given a string sequence of bits (1 and 0) it returns the equivalent symbol sequence.
+     * @return  String
+     */
+    public String symbolsFromBits(String bits){
+
+        Queue<String> bitList = new LinkedList<>();
+
+        for(int i = 0; i<bits.length(); i++) {
+            char b = bits.charAt(i);
+            String nextBit = "" + b;
+            bitList.add(nextBit);
+        }
+        String sequence = "";
+        String nextBit = "";
+        String nextSeq = "";
+
+        while (!bitList.isEmpty()){
+            nextBit = bitList.poll();
+            nextSeq = nextSeq+nextBit;
+            if(inverseCodeTable.containsKey(nextSeq)){
+                sequence = sequence + inverseCodeTable.get(nextSeq);
+                nextSeq = "";
+            }
+        }
+        return sequence;
+    }
+
+
 
     /**
      * It calculates the total sum of the frequencies (It should be 1 always).
@@ -140,6 +122,7 @@ public class HuffTree {
 
     /**
      * It creates a table with Symbols and it's respective nodes from the tree.
+     * Calls generateTable to recursivity.
      * @return HashMap<String,String>
      */
     public void codeTableFromTree(){
@@ -154,7 +137,7 @@ public class HuffTree {
             table.put(nextNode.getSymbol(), code);
             return table;
         }
-        if (nextNode.isHasOne()) {
+        if(nextNode.isHasOne()) {
             String newCode = code + "1";
             table = generateTable(table, nextNode.getNextOne(), newCode);
         }
@@ -165,10 +148,11 @@ public class HuffTree {
         return table;
     }
 
+
+
     public HashMap<String,String> getCodeTable(){
         return this.codeTable;
     }
-
 
     /**
      * Prints all the nodes and their values of the tree,
