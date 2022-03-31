@@ -42,8 +42,6 @@ public class Huffman {
             float compRatio =  bitsNoComp/newLength;
             System.out.print("Compression Ratio: "+compRatio+"\n"+"\n"+"\n");
         }
-
-
         //String sequence = "DQTD9"
         //String sequence = "00110100000101";
 
