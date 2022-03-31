@@ -4,7 +4,8 @@ public class HuffTables {
     private HashMap<String,Integer> originalCountTable;
     private HashMap<String,Float> symbolFreqTable;
     private HashMap<String,String> codeTable;
-
+    private HashMap<String,String> inverseCodeTable;
+    private HuffTree hTree;
 
     public HuffTables(){
         HashMap<String, Float> symbolFreqTable = new HashMap<>();
@@ -15,18 +16,22 @@ public class HuffTables {
         symbolFreqTable.put("J", (float) 0.15);
         symbolFreqTable.put("T", (float) 0.1);
         symbolFreqTable.put("9", (float) 0.05);
-        HuffTree hTree = new HuffTree(symbolFreqTable);
+        hTree = new HuffTree(symbolFreqTable);
         //hTree.printNodes();
 
-        codeTable = hTree.codeTableFromTree();
-
+        codeTable = hTree.getCodeTable();
+        inverseCodeTable = hTree.getInverseCodeTable();
         System.out.print(codeTable +"\n");
+        System.out.print(inverseCodeTable +"\n");
 
+    }
+
+    public String bitsToSymbols(String bits){
+        return  hTree.symbolsFromBits(bits);
     }
 
     public String symbolsToBits(String squence){
         String bits = "";
-
         for(int i = 0; i<squence.length(); i++) {
             // access each character
             char a = squence.charAt(i);
@@ -35,4 +40,6 @@ public class HuffTables {
         }
         return bits;
     }
+
+
 }

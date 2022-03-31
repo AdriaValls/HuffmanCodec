@@ -3,12 +3,15 @@ import java.util.*;
 public class HuffTree {
     private HuffNode initialNode;
     private List<HuffNode> huffmanTree;
-
     private HashMap<String,Float> freqTable;
+    private  HashMap<String,String> codeTable;
+    private  HashMap<String,String> inverseCodeTable;
 
     public HuffTree(HashMap<String,Float> freqTable){
         this.freqTable = freqTable;
         treeFromTable(freqTable);
+        codeTableFromTree();
+        invertCodeTable();
     }
 
     public void treeFromTable(HashMap<String,Float> freqTable){
@@ -46,7 +49,68 @@ public class HuffTree {
         this.initialNode = newNode;
         this.huffmanTree = tree;
     }
+    public void invertCodeTable(){
+        HashMap<String,String> newCodeT = new HashMap<String,String>();
 
+        for(String key : codeTable.keySet()){
+            newCodeT.put(codeTable.get(key), key);
+        }
+        this.inverseCodeTable = newCodeT;
+    }
+
+    public HashMap<String,String> getInverseCodeTable(){
+        return this.inverseCodeTable;
+    }
+
+    public String symbolsFromBits(String bits){
+
+        Queue<String> bitList = new LinkedList<>();
+        for(int i = 0; i<bits.length(); i++) {
+            char b = bits.charAt(i);
+            String nextBit = "" + b;
+            bitList.add(nextBit);
+        }
+        String sequence = "";
+        String nextBit = "";
+        String nextSeq = "";
+        while (!bitList.isEmpty()){
+            nextBit = bitList.poll();
+            nextSeq = nextSeq+nextBit;
+            if(inverseCodeTable.containsKey(nextSeq)){
+                sequence = sequence + inverseCodeTable.get(nextSeq);
+                nextSeq = "";
+            }
+        }
+
+        return sequence;
+    }
+
+/*
+    boolean gotSymbol;
+        while (!bitList.isEmpty()){
+        gotSymbol = false;
+        String nextSymbol = "";
+        HuffNode nextNode = initialNode;
+        String nextBit = bitList.poll();
+
+        while(!gotSymbol){
+
+            if(nextNode.isHasSymbol()){
+                nextSymbol = nextNode.getSymbol();
+                sequence = sequence+nextSymbol;
+                gotSymbol = true;
+            }else{
+                if (nextBit.equals("0")){
+                    nextNode = huffmanTree.get(nextNode.getNextZero());
+                    nextBit = bitList.poll();
+                }else{
+                    nextNode = huffmanTree.get(nextNode.getNextOne());
+                    nextBit = bitList.poll();
+                }
+            }
+        }
+    }
+*/
 
 
     /**
@@ -78,11 +142,12 @@ public class HuffTree {
      * It creates a table with Symbols and it's respective nodes from the tree.
      * @return HashMap<String,String>
      */
-    public HashMap<String,String> codeTableFromTree(){
+    public void codeTableFromTree(){
         HashMap<String,String> symbolCodeTable = new HashMap<String,String>();
         HashMap<String,String>  codeTable = generateTable(symbolCodeTable, initialNode.getId(),"");
-        return codeTable;
+        this.codeTable = codeTable;
     }
+
     public HashMap<String,String> generateTable(HashMap<String,String> table, int nodeId, String code) {
         HuffNode nextNode = huffmanTree.get(nodeId);
         if (nextNode.isHasSymbol()) {
@@ -99,6 +164,11 @@ public class HuffTree {
         }
         return table;
     }
+
+    public HashMap<String,String> getCodeTable(){
+        return this.codeTable;
+    }
+
 
     /**
      * Prints all the nodes and their values of the tree,
