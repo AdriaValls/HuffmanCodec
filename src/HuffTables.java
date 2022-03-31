@@ -8,14 +8,16 @@ public class HuffTables {
 
     }
 
-    public HashMap<String,Float> probabilityTableFromString(String text){
+    public HashMap<Character,Float> probabilityTableFromString(String text){
         HashMap<String,Integer> originalCountTable = new HashMap<String,Integer>();
-        HashMap<String,Float> symbolProbabilityTable = new HashMap<String,Float>();
 
 
 
+        HashMap<Character,Float> symbolProbabilityTable = new HashMap<Character,Float>();
 
         return symbolProbabilityTable;
-
     }
+
+
+    
 }
