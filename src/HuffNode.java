@@ -1,5 +1,5 @@
-public class HuffNode implements Comparable<HuffNode>{
-    private char symbol;
+public class HuffNode{
+    private String symbol;
     private int nodeId;
     private float frequency;
 
@@ -10,26 +10,24 @@ public class HuffNode implements Comparable<HuffNode>{
     private boolean hasSymbol;
 
 
-    public HuffNode(float val) {
-        this.value = val;
-        this.hasZero = false;
-        this.hasOne = false;
-        this.hasSymbol = false;
-
-    }
-    public HuffNode(int id, float val){
-        this.nodeId = id;
-        this.frequency = val;
+    public HuffNode(float frequency) {
+        this.frequency = frequency;
         this.hasZero = false;
         this.hasOne = false;
         this.hasSymbol = false;
     }
 
+    public HuffNode(float frequency, String symbol){
+        this.symbol = symbol ;
+        this.frequency = frequency;
+        this.hasZero = false;
+        this.hasOne = false;
+        this.hasSymbol = true;
+    }
 
-
-    public HuffNode(int id, float val, String sy) {
+    public HuffNode(int id, float frequency, String sy) {
         this.nodeId = id;
-        this.frequency = val;
+        this.frequency = frequency;
         this.symbol = sy;
         this.hasSymbol = true;
     }
@@ -38,6 +36,9 @@ public class HuffNode implements Comparable<HuffNode>{
         this.nodeId = id;
     }
 
+    public int getId(){
+        return nodeId;
+    }
 
     public void setZeroNode(int id){
         this.nextZero = id;
@@ -68,13 +69,19 @@ public class HuffNode implements Comparable<HuffNode>{
         return this.nextOne;
     }
 
-    private float getFrequency(){
+    public float getFrequency(){
         return this.frequency;
+    }
+    public String getSymbol(){
+        return this.symbol;
+    }
 
 
-
-    @Override
-    public int compareTo(HuffNode otherNode) {
-        return (int) (this.frequency - otherNode.frequency);
+    public String nodeToString(){
+        String toS = "Node "+nodeId+ ", amb frequencia: "+frequency;
+        if(isHasSymbol()){
+            toS = toS +", i Simbol "+symbol;
+        }
+        return toS;
     }
 }
